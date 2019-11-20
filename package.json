@@ -2,8 +2,9 @@
   "name": "gist-tool",
   "private": true,
   "scripts": {
-    "lint": "lerna run lint",
-    "test": "lerna run test"
+    "lint": "lerna run lint --stream",
+    "test": "lerna run test --stream",
+    "start": "lerna run start --stream"
   },
   "devDependencies": {
     "husky": "^3.1.0",

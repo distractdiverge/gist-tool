@@ -1,23 +1,49 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
+import {
+  NestFastifyApplication,
+  FastifyAdapter,
+} from '@nestjs/platform-fastify';
 
 describe('AppController (e2e)', () => {
-  let app;
+  let app: NestFastifyApplication;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
 
-    app = moduleFixture.createNestApplication();
+    app = moduleFixture.createNestApplication<NestFastifyApplication>(
+      new FastifyAdapter(),
+    );
     await app.init();
   });
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+  afterEach(async () => {
+    await app.close();
   });
+
+  it('GET /', () =>
+    app
+      .inject({
+        method: 'GET',
+        url: '/',
+      })
+      .then(response => {
+        expect(response.statusCode).toBe(200);
+        expect(response.payload).toMatchInlineSnapshot(`"Hello World!"`);
+      }));
+
+  it('GET /foo', () =>
+    app
+      .inject({
+        method: 'GET',
+        url: '/foo',
+      })
+      .then(response => {
+        expect(response.statusCode).toBe(200);
+        expect(response.payload).toMatchInlineSnapshot(
+          `"{\\"foo\\":\\"buzz\\"}"`,
+        );
+      }));
 });
