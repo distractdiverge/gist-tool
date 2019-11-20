@@ -10,6 +10,7 @@ async function bootstrap(): Promise<void> {
     AppModule,
     new FastifyAdapter(),
   );
+  app.setGlobalPrefix('api');
   // TODO: Allow listening on 0.0.0.0 instead of just 127.0.0.1 for docker
   await app.listen(3000);
 }
