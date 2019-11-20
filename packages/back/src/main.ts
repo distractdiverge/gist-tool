@@ -12,7 +12,7 @@ async function bootstrap(): Promise<void> {
   );
   app.setGlobalPrefix('api');
   // TODO: Allow listening on 0.0.0.0 instead of just 127.0.0.1 for docker
-  await app.listen(3000);
+  await app.listen(5000);
 }
 
 // TODO: Trigger launch of bootstrap only if this file is run directly
