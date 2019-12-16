@@ -1,4 +1,23 @@
-export { IGoal } from './igoal.entity';
-export { IIdea } from './iidea.entity';
-export { IStepProject } from './istep-project.entity';
-export { ITask } from './itask.entity';
+export interface Goal {
+    id: string;
+    name: string;
+    description: string;
+}
+
+export interface Idea {
+    id: string;
+    name: string;
+    description: string;
+}
+
+export interface StepProject {
+    id: string;
+    name: string;
+    description: string;
+}
+
+export interface Task {
+    id: string;
+    name: string;
+    description: string;
+}
